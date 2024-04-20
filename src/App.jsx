@@ -6,56 +6,50 @@ import SignupForm from "./_auth/forms/SignupForm";
 import RootLayout from "./_root/RootLayout";
 import { Home } from "./_root/pages";
 import { Toaster } from "react-hot-toast";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
+import { QueryProvider } from "./lib/react-query/QueryProvider";
+import AuthProvider from "./context/AuthContext";
 
 const App = () => {
   return (
     <main>
-      <QueryClientProvider client={queryClient}>
+      <QueryProvider>
         <BrowserRouter>
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route path="/sign-in" element={<SigninForm />} />
-              <Route path="/sign-up" element={<SignupForm />} />
-            </Route>
+          <AuthProvider>
+            <Routes>
+              <Route element={<AuthLayout />}>
+                <Route path="/sign-in" element={<SigninForm />} />
+                <Route path="/sign-up" element={<SignupForm />} />
+              </Route>
 
-            <Route element={<RootLayout />}>
-              <Route index element={<Home />} />
-            </Route>
-          </Routes>
+              <Route element={<RootLayout />}>
+                <Route index element={<Home />} />
+              </Route>
+            </Routes>
+          </AuthProvider>
         </BrowserRouter>
-        <Toaster
-          position="top-center"
-          gutter={12}
-          containerStyle={{ margin: "8px" }}
-          toastOptions={{
-            success: {
-              duration: 3000,
-            },
-            error: {
-              duration: 5000,
-            },
-            style: {
-              fontSize: "16px",
-              maxWidth: "500px",
-              padding: "16px 24xp",
-              backgroundColor: "#1E1E23",
-              color: "#F9FAFD",
-            },
-          }}
-        />
-
         <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      </QueryProvider>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24xp",
+            backgroundColor: "#1E1E23",
+            color: "#F9FAFD",
+          },
+        }}
+      />
     </main>
   );
 };
