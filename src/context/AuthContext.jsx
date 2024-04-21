@@ -24,7 +24,6 @@ const AuthContext = createContext(initialState);
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState(initialUser);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +50,6 @@ const AuthProvider = ({ children }) => {
       return false;
     } catch (error) {
       console.log(error);
-      return false;
     } finally {
       setIsLoading(false);
     }
@@ -65,7 +63,7 @@ const AuthProvider = ({ children }) => {
       cookieFallback === null ||
       cookieFallback === undefined
     )
-      navigate("/sign-in");
+      navigate("/sign-up");
 
     checkAuthUser();
   }, []);
@@ -80,7 +78,9 @@ const AuthProvider = ({ children }) => {
         checkAuthUser,
         isLoading,
       }}
-    ></AuthContext.Provider>
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 

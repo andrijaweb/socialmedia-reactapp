@@ -34,7 +34,7 @@ export async function saveUserToDatabase(user) {
     const newUser = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      ID.unique,
+      ID.unique(),
       user
     );
 
@@ -46,7 +46,10 @@ export async function saveUserToDatabase(user) {
 
 export async function loginAccount(user) {
   try {
-    const session = await account.createEmailSession(user.email, user.password);
+    const session = await account.createEmailPasswordSession(
+      user.email,
+      user.password
+    );
 
     return session;
   } catch (error) {
@@ -54,9 +57,19 @@ export async function loginAccount(user) {
   }
 }
 
-export async function getCurrentUser() {
+export async function getAccount() {
   try {
     const curAccount = await account.get();
+
+    return curAccount;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    const curAccount = await getAccount();
     if (!curAccount) throw Error;
 
     const curUser = await databases.listDocuments(
@@ -70,6 +83,5 @@ export async function getCurrentUser() {
     return curUser.documents[0];
   } catch (error) {
     console.log(error);
-    return null;
   }
 }
