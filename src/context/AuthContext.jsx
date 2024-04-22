@@ -60,8 +60,8 @@ const AuthProvider = ({ children }) => {
 
     if (
       cookieFallback === "[]" ||
-      cookieFallback === null ||
-      cookieFallback === undefined
+      cookieFallback === undefined ||
+      cookieFallback === null
     )
       navigate("/sign-up");
 
