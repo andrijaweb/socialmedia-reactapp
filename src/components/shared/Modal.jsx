@@ -44,7 +44,7 @@ const Window = ({ children, name }) => {
           <HiXMark />
         </button>
 
-        <div>{cloneElement(children, { onCloseModal: close })}</div>
+        <div>{cloneElement(children, { onClose: close })}</div>
       </div>
     </div>,
     document.body

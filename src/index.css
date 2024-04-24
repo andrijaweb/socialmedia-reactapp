@@ -8,12 +8,25 @@ body {
 }
 
 @layer components {
-  .input {
+  .input,
+  .textarea {
     @apply w-full px-5 py-3 rounded-md bg-dark-2 placeholder:text-light-1 placeholder:opacity-30 text-sm placeholder:text-sm outline-none;
   }
 
   .btn-form {
     @apply bg-primary-blue border-2 border-primary-blue py-2.5 w-full rounded-md transition-all duration-300 hover:bg-transparent hover:border-light-1;
+  }
+
+  .btn {
+    @apply py-2.5 px-10 rounded-md transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary-blue hover:bg-primary-blue-light;
+  }
+
+  .btn-secondary {
+    @apply border border-light-opacity-10 hover:bg-light-opacity-10;
   }
 
   .nav-link {

@@ -24,7 +24,7 @@ const SigninForm = () => {
 
     const isLoggedIn = await checkAuthUser();
     if (isLoggedIn) {
-      // reset();
+      reset();
       navigate("/");
     } else {
       toast.error("Login failed! Please try again.");
