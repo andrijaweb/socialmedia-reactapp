@@ -13,6 +13,7 @@ export default {
         "light-1": "#F9FAFD",
         "light-2": "#B1B3BC",
         "primary-blue": "#6483F0",
+        "primary-blue-30": "#6482f01a",
         "danger-1": "#F55656",
         "success-1": "#31DE4B",
       },
