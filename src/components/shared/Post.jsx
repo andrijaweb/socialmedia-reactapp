@@ -37,14 +37,14 @@ const Post = ({ post }) => {
         </div>
       </figure>
 
-      <p>{caption}</p>
-
       {location && (
         <div className="flex items-center gap-1 text-light-2">
           <HiOutlineMapPin className="text-xl" />
           {location}
         </div>
       )}
+
+      <p>{caption}</p>
 
       <div className="rounded-md overflow-hidden text-center">
         <img src={postImageUrl} alt="post" />
