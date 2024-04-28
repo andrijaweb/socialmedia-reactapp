@@ -19,6 +19,7 @@ export default {
         "primary-blue-light": "#5274ef",
         "primary-blue-30": "#6482f01a",
         "danger-1": "#F55656",
+        "danger-2": "#F22626",
         "success-1": "#31DE4B",
       },
     },
