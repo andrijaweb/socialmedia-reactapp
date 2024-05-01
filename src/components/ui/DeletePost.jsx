@@ -21,7 +21,7 @@ const DeletePost = ({ post }) => {
     <Modal>
       <Modal.Open opens="edit">
         <button>
-          <HiOutlineTrash className="text-xl" />
+          <HiOutlineTrash className="text-xl hover:text-danger-1" />
         </button>
       </Modal.Open>
       <Modal.Window name="edit">
