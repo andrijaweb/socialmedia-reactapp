@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
-import { Link } from "react-router-dom";
 
 import SearchResults from "../../components/shared/SearchResults";
 import PostsList from "../../components/shared/PostsList";
@@ -10,14 +9,19 @@ import {
 } from "../../lib/react-query/authQueriesAndMutations";
 import useDebounce from "../../hooks/useDebounce";
 import Loader from "../../components/shared/Loader";
+import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
+  const { ref, inView } = useInView();
   const [query, setQuery] = useState("");
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-
   const debouncedQuery = useDebounce(query, 500);
   const { data: searchedPosts, isFetching: isSearchingPosts } =
     useGetPostsBySearch(debouncedQuery);
+
+  useEffect(() => {
+    if (inView && !query) fetchNextPage();
+  }, [inView, query, fetchNextPage]);
 
   if (!posts)
     return (
@@ -57,13 +61,25 @@ const Explore = () => {
       </div>
 
       {shouldShowSearchResults ? (
-        <SearchResults />
+        <SearchResults
+          searchedPosts={searchedPosts}
+          isSearchingPosts={isSearchingPosts}
+        />
       ) : shouldShowPosts ? (
         <p>You've reached the end.</p>
       ) : (
         posts.pages.map((item, i) => (
           <PostsList key={i} posts={item.documents} />
         ))
+      )}
+
+      {hasNextPage && !query && (
+        <div
+          ref={ref}
+          className="mt-10 flex items-center justify-center w-full"
+        >
+          <Loader />
+        </div>
       )}
     </div>
   );
