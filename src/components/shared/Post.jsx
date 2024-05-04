@@ -9,6 +9,7 @@ import DeletePost from "../ui/DeletePost";
 const Post = ({ post }) => {
   const {
     creator: { $id: creatorId, name: userName, imageUrl: userImageUrl },
+    $id: postId,
     caption,
     imageUrl: postImageUrl,
     imageId,
@@ -57,9 +58,12 @@ const Post = ({ post }) => {
 
       <p>{caption}</p>
 
-      <div className="rounded-md overflow-hidden text-center">
+      <Link
+        to={`posts/${postId}`}
+        className="rounded-md overflow-hidden text-center"
+      >
         <img src={postImageUrl} alt="post" />
-      </div>
+      </Link>
 
       <PostOperations post={post} userId={user.id} />
 
