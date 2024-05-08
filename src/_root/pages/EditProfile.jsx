@@ -6,7 +6,8 @@ import {
   useEditProfile,
   useGetUserById,
 } from "../../lib/react-query/authQueriesAndMutations";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { HiOutlineArrowUturnLeft } from "react-icons/hi2";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -57,6 +58,11 @@ const EditProfile = () => {
 
   return (
     <div>
+      <Link to={-1} className="flex items-center gap-2 text-primary-blue mb-5">
+        <HiOutlineArrowUturnLeft className="text-xl" />
+        Back
+      </Link>
+
       <h1 className="text-2xl font-medium">Edit Profile</h1>
 
       <form

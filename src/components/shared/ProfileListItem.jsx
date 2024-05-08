@@ -18,7 +18,7 @@ const ProfileListItem = ({ user }) => {
       </figure>
 
       <button className="border-2 border-primary-blue text-sm px-4 py-1 rounded-md hover:bg-primary-blue">
-        Follow
+        Add Friend
       </button>
     </div>
   );
