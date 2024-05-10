@@ -12,7 +12,6 @@ const Post = ({ post }) => {
     $id: postId,
     caption,
     imageUrl: postImageUrl,
-    imageId,
     location,
     tags,
     $createdAt: postCreatedAt,
@@ -23,7 +22,7 @@ const Post = ({ post }) => {
   const postFormatedDate = formatDate(postCreatedAt);
 
   return (
-    <div className="bg-dark-2 p-5 rounded-md max-w-screen-sm flex flex-col gap-5">
+    <div className="bg-dark-2 p-5 rounded-md flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <figure className="flex items-center gap-4">
           <Link to={`/profile/${creatorId}`}>
