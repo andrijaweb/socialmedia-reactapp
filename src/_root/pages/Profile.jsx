@@ -33,7 +33,7 @@ const Profile = () => {
 
   return (
     <div className="w-full">
-      <figure className="flex gap-8">
+      <figure className="flex gap-8 mb-10">
         <div className="flex items-center gap-4">
           <img
             src={profileAvatarUrl}
@@ -42,7 +42,7 @@ const Profile = () => {
           />
         </div>
 
-        <div className="flex flex-col py-5">
+        <div className="flex flex-col py-5 gap-4">
           <div className="space-y-2.5">
             <p className="text-4xl">{profileName}</p>
             <p className="text-sm text-light-2">@{profileUsername}</p>
@@ -56,6 +56,8 @@ const Profile = () => {
               <span className="text-primary-blue">0</span> friends
             </p>
           </div>
+
+          <p className="text-light-2 max-w-md">{bio}</p>
         </div>
 
         {profileId === userId && (
@@ -65,8 +67,6 @@ const Profile = () => {
           </Link>
         )}
       </figure>
-
-      <p className="text-light-2 mt-5 mb-20">{bio}</p>
 
       <PostsList posts={posts} showUser={false} />
     </div>
