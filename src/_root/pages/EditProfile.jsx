@@ -5,7 +5,7 @@ import Loader from "../../components/shared/Loader";
 import {
   useEditProfile,
   useGetUserById,
-} from "../../lib/react-query/authQueriesAndMutations";
+} from "../../lib/react-query/queriesAndMutations";
 import { Link, useParams } from "react-router-dom";
 import { HiOutlineArrowUturnLeft } from "react-icons/hi2";
 
