@@ -1,26 +1,27 @@
-import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
-import Loader from "../../components/shared/Loader";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+
 import {
   useCreateUserAccount,
   useLoginAccount,
 } from "../../lib/react-query/queriesAndMutations";
 import { useUser } from "../../context/AuthContext";
 
+import Loader from "../../components/shared/Loader";
+import FormError from "../../components/ui/FormError";
+
 const SignupForm = () => {
   const navigate = useNavigate();
   const { register, formState, handleSubmit, reset } = useForm();
   const { errors } = formState;
-
-  const { checkAuthUser, isLoading: isUserLoading } = useUser();
+  const { checkAuthUser } = useUser();
 
   const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
     useCreateUserAccount();
-
   const { mutateAsync: loginAccount, isPending: isLoggingIn } =
     useLoginAccount();
+  const isWorking = isCreatingAccount || isLoggingIn;
 
   async function onSubmit(data) {
     const newUser = await createUserAccount(data);
@@ -36,7 +37,7 @@ const SignupForm = () => {
 
     const isLoggedIn = await checkAuthUser();
     if (isLoggedIn) {
-      // reset();
+      reset();
       navigate("/");
     } else {
       toast.error("Sign up failed! Please try again.");
@@ -56,12 +57,15 @@ const SignupForm = () => {
             id="name"
             {...register("name", {
               required: "This field is required.",
+              minLength: {
+                value: 3,
+                message: "Name needs a minimum of 3 characters.",
+              },
             })}
+            disabled={isWorking}
             className="input"
           />
-          {errors?.name?.message && (
-            <p className="text-danger-1 text-sm">{errors?.name?.message}</p>
-          )}
+          {<FormError errors={errors} fieldName="name" />}
         </div>
 
         <div className="mt-5">
@@ -74,12 +78,15 @@ const SignupForm = () => {
             id="username"
             {...register("username", {
               required: "This field is required.",
+              minLength: {
+                value: 3,
+                message: "Username needs a minimum of 3 characters.",
+              },
             })}
+            disabled={isWorking}
             className="input"
           />
-          {errors?.username?.message && (
-            <p className="text-danger-1 text-sm">{errors?.username?.message}</p>
-          )}
+          {<FormError errors={errors} fieldName="username" />}
         </div>
 
         <div className="mt-5">
@@ -97,11 +104,10 @@ const SignupForm = () => {
                 message: "Please provide a valid email address.",
               },
             })}
+            disabled={isWorking}
             className="input"
           />
-          {errors?.email?.message && (
-            <p className="text-danger-1 text-sm">{errors?.email?.message}</p>
-          )}
+          <FormError errors={errors} fieldName="email" />
         </div>
 
         <div className="mt-5">
@@ -119,17 +125,16 @@ const SignupForm = () => {
                 message: "Password needs a minimum of 8 characters.",
               },
             })}
+            disabled={isWorking}
             className="input"
           />
-          {errors?.password?.message && (
-            <p className="text-danger-1 text-sm">{errors?.password?.message}</p>
-          )}
+          <FormError errors={errors} fieldName="password" />
         </div>
         <p className="text-xs opacity-40 mt-5 mb-2.5">
           By clicking Sign Up you agree to Terms, Data Policy and Cookie Policy.{" "}
         </p>
-        <button className="btn-form">
-          {isCreatingAccount ? (
+        <button className="btn-form" disabled={isWorking}>
+          {isWorking ? (
             <div className="flex justify-center items-center gap-2">
               <Loader /> Loading...
             </div>
