@@ -45,6 +45,42 @@ export const useLogoutAccount = () => {
   });
 };
 
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: ["getPosts"],
+    queryFn: getPosts,
+    getNextPageParam: (lastPage) => {
+      if (lastPage && lastPage.documents.length === 0) return null;
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+
+      return lastId;
+    },
+  });
+};
+
+export const useGetRecentPosts = () => {
+  return useQuery({
+    queryKey: ["getRecentPosts"],
+    queryFn: getRecentPosts,
+  });
+};
+
+export const useGetPostsBySearch = (query) => {
+  return useQuery({
+    queryKey: ["getSearchedPosts", query],
+    queryFn: () => getPostsBySearch(query),
+    enabled: !!query,
+  });
+};
+
+export const useGetPostById = (postId) => {
+  return useQuery({
+    queryKey: ["getPostById", postId],
+    queryFn: () => getPostById(postId),
+    enabled: !!postId,
+  });
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
 
@@ -59,13 +95,6 @@ export const useCreatePost = () => {
         queryKey: ["getCurrentUser"],
       });
     },
-  });
-};
-
-export const useGetRecentPosts = () => {
-  return useQuery({
-    queryKey: ["getRecentPosts"],
-    queryFn: getRecentPosts,
   });
 };
 
@@ -108,13 +137,6 @@ export const useDeleteSavedPost = () => {
   });
 };
 
-export const useGetCurrentUser = () => {
-  return useQuery({
-    queryKey: ["getCurrentUser"],
-    queryFn: getCurrentUser,
-  });
-};
-
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
 
@@ -142,32 +164,10 @@ export const useDeletePost = () => {
   });
 };
 
-export const useGetPosts = () => {
-  return useInfiniteQuery({
-    queryKey: ["getPosts"],
-    queryFn: getPosts,
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) return null;
-      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
-
-      return lastId;
-    },
-  });
-};
-
-export const useGetPostsBySearch = (query) => {
+export const useGetCurrentUser = () => {
   return useQuery({
-    queryKey: ["getSearchedPosts", query],
-    queryFn: () => getPostsBySearch(query),
-    enabled: !!query,
-  });
-};
-
-export const useGetPostById = (postId) => {
-  return useQuery({
-    queryKey: ["getPostById", postId],
-    queryFn: () => getPostById(postId),
-    enabled: !!postId,
+    queryKey: ["getCurrentUser"],
+    queryFn: getCurrentUser,
   });
 };
 
