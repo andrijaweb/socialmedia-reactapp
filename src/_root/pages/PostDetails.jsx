@@ -1,17 +1,19 @@
 import { Link, useParams } from "react-router-dom";
-import { useGetPostById } from "../../lib/react-query/queriesAndMutations";
-import { useUser } from "../../context/AuthContext";
-import Loader from "../../components/shared/Loader";
 import {
   HiOutlineArrowUturnLeft,
   HiOutlineArrowsPointingOut,
 } from "react-icons/hi2";
+
+import { useGetPostById } from "../../lib/react-query/queriesAndMutations";
+import { useUser } from "../../context/AuthContext";
+import { formatDate } from "../../lib/utils";
+
 import EditPost from "../../components/ui/EditPost";
 import DeletePost from "../../components/ui/DeletePost";
-import { formatDate } from "../../lib/utils";
 import Tags from "../../components/shared/Tags";
 import PostOperations from "../../components/shared/PostOperations";
 import Modal from "../../components/shared/Modal";
+import LoaderCentered from "../../components/ui/LoaderCentered";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -20,12 +22,7 @@ const PostDetails = () => {
     user: { id: userId },
   } = useUser();
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center w-full h-full">
-        <Loader />
-      </div>
-    );
+  if (isLoading) return <LoaderCentered />;
 
   const {
     imageUrl,
