@@ -1,18 +1,22 @@
+import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useUser } from "../../context/AuthContext";
-import Button from "../../components/ui/Button";
-import Loader from "../../components/shared/Loader";
+import { HiOutlineArrowUturnLeft } from "react-icons/hi2";
+
 import {
   useEditProfile,
   useGetUserById,
 } from "../../lib/react-query/queriesAndMutations";
-import { Link, useParams } from "react-router-dom";
-import { HiOutlineArrowUturnLeft } from "react-icons/hi2";
+
+import { useUser } from "../../context/AuthContext";
+import Loader from "../../components/shared/Loader";
+import Button from "../../components/ui/Button";
+import FormError from "../../components/ui/FormError";
+import LoaderCentered from "../../components/ui/LoaderCentered";
 
 const EditProfile = () => {
   const { id } = useParams();
-
   const { user, setUser } = useUser();
+
   const { mutateAsync: editProfile, isLoading: isEditing } = useEditProfile();
   const { data: currentUser } = useGetUserById(id || "");
 
@@ -29,12 +33,7 @@ const EditProfile = () => {
 
   const { imageUrl } = user;
 
-  if (!currentUser)
-    return (
-      <div className="flex items-center justify-center w-full h-full">
-        <Loader />
-      </div>
-    );
+  if (!currentUser) return <LoaderCentered />;
 
   async function onSubmit(data) {
     const editedProfile = await editProfile({
@@ -91,9 +90,7 @@ const EditProfile = () => {
             className="hidden"
             disabled={isEditing}
           />
-          {errors?.image?.message && (
-            <p className="text-danger-1 text-sm">{errors?.image?.message}</p>
-          )}
+          <FormError errors={errors} fieldName="image" />
         </div>
 
         <div className="flex flex-col md:flex-row gap-5">
@@ -109,9 +106,7 @@ const EditProfile = () => {
               className="input bg-dark-3"
               disabled={isEditing}
             />
-            {errors?.name?.message && (
-              <p className="text-danger-1 text-sm">{errors?.name?.message}</p>
-            )}
+            <FormError errors={errors} fieldName="name" />
           </div>
 
           <div>
@@ -126,11 +121,7 @@ const EditProfile = () => {
               className="input bg-dark-3"
               disabled={isEditing}
             />
-            {errors?.username?.message && (
-              <p className="text-danger-1 text-sm">
-                {errors?.username?.message}
-              </p>
-            )}
+            <FormError errors={errors} fieldName="username" />
           </div>
         </div>
 
@@ -146,9 +137,7 @@ const EditProfile = () => {
             className="input bg-dark-3"
             disabled={isEditing}
           />
-          {errors?.email?.message && (
-            <p className="text-danger-1 text-sm">{errors?.email?.message}</p>
-          )}
+          <FormError errors={errors} fieldName="email" />
         </div>
 
         <div>
@@ -162,9 +151,7 @@ const EditProfile = () => {
             className="textarea bg-dark-3"
             disabled={isEditing}
           />
-          {errors?.bio?.message && (
-            <p className="text-danger-1 text-sm">{errors?.bio?.message}</p>
-          )}
+          <FormError errors={errors} fieldName="bio" />
         </div>
 
         <div className="flex items-center gap-2 justify-end mt-5">
@@ -175,7 +162,7 @@ const EditProfile = () => {
           >
             Clear
           </button>
-          <Button>
+          <button className="btn btn-primary">
             {isEditing ? (
               <div className="flex justify-center items-center gap-2">
                 <Loader /> Loading...
@@ -183,7 +170,7 @@ const EditProfile = () => {
             ) : (
               "Edit Profile"
             )}
-          </Button>
+          </button>
         </div>
       </form>
     </div>
