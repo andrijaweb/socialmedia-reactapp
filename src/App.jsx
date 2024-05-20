@@ -20,6 +20,7 @@ import {
   PostDetails,
   EditProfile,
 } from "./_root/pages";
+import AccountSettings from "./components/ui/AccountSettings";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
                 <Route path="/edit-profile/:id" element={<EditProfile />} />
                 <Route path="/saved" element={<Saved />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/settings/account" element={<AccountSettings />} />
               </Route>
             </Routes>
           </AuthProvider>
