@@ -34,10 +34,6 @@ const Topbar = () => {
           </div>
         </Link>
 
-        <button className="p-2.5 hover:bg-primary-blue-30 rounded-full">
-          <HiOutlineBell className="text-primary-blue text-2xl" />
-        </button>
-
         <Modal>
           <Modal.Open opens="logout">
             <button className="p-2.5 hover:bg-primary-blue-30 rounded-full">
